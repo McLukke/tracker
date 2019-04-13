@@ -1,0 +1,7 @@
+{
+  "longTermAsset": [
+    { "id": 1, "name": "Primary Home", "interest": "1%", "amount": 0 },
+    { "id": 2, "name": "Second Home", "interest": "2%", "amount": 0 },
+    { "id": 3, "name": "Other", "interest": "", "amount": 0 }
+  ]
+}

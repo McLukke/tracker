@@ -1,0 +1,18 @@
+{
+  "liabilities": [
+    {
+      "id": 1,
+      "name": "Credit Card 1",
+      "pay": "200.00",
+      "interest": "50%",
+      "amount": 0
+    },
+    {
+      "id": 2,
+      "name": "Credit Card 2",
+      "pay": "150.00",
+      "interest": "22%",
+      "amount": 0
+    }
+  ]
+}
