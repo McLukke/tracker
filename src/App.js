@@ -58,45 +58,6 @@ function createData2(name, pay, interest, amount) {
   return { id, name, pay, interest, amount };
 }
 
-const cashInvestments = [
-  {id: 1, name: 'Chequing', interest: "0%", amount:0},
-  {id: 2, name: 'Savings for Taxes', interest: "0%", amount:0},
-  {id: 3, name: 'Rainy Day Fund', interest: "0%", amount:0},
-  {id: 4, name: 'Savings for Fun', interest: "0%", amount:0},
-  {id: 5, name: 'Savings for Travel', interest: "0%", amount:0},
-  {id: 6, name: 'Savings for Personal Development', interest: "1.50%", amount:0},
-  {id: 7, name: 'Investment1', interest: "2.3%", amount:0},
-  {id: 8, name: 'Investment2', interest: "2%", amount:0},
-  {id: 9, name: 'Investment3', interest: "5%", amount:0},
-  {id: 10, name: 'Investment4', interest: "10%", amount:0},
-  {id: 11, name: 'Investment5', interest: "0%", amount:0},
-
-
-];
-
-
-const longTermasset = [
-  {id:1, name: 'Primary Home', interest:"1%", amount: 0},
-  {id:2, name:'Second Home', interest:"2%", amount:0},
-  {id:3, name:'Other', interest:"", amount: 0},
-
-];
-
-
-const liabilities = [
-  {id:1, name:'Credit Card 1', pay:"200.00", interest:"50%", amount:0},
-  {id:2, name:'Credit Card 2', pay:"150.00", interest:"22%", amount:0},
-]
-
-
-const debt = [
-  {id: 1, name: 'Mortgage 1', pay:"2000.00", interest:"2.60%", amount:0},
-  {id: 2, name: 'Mortgage 2', pay:"3500.00", interest:"22%", amount: 0},
-  {id:3,  name:'Line of Credit', pay:"500.00", interest: "5%", amount:0},
-  {id:4,  name:'Investment Loan',pay: "700.00", interest:"6%", amount:0},
-  {id:5,  name:'Student Loan', pay:"3500.00", interest:"22%", amount:0},
-  {id:6,  name:'Car Loan', pay:"3500.00", interest:"22%", amount:0},
-]
 
 
 /* When the user clicks on the button,
@@ -164,17 +125,59 @@ class CustomizedTable extends Component {
   }
 
 
-  changeAssetInput = (id, event) => {
+   cashInvestments = [
+    {id: 1, name: 'Chequing', interest: "0%", amount:0},
+    {id: 2, name: 'Savings for Taxes', interest: "0%", amount:0},
+    {id: 3, name: 'Rainy Day Fund', interest: "0%", amount:0},
+    {id: 4, name: 'Savings for Fun', interest: "0%", amount:0},
+    {id: 5, name: 'Savings for Travel', interest: "0%", amount:0},
+    {id: 6, name: 'Savings for Personal Development', interest: "1.50%", amount:0},
+    {id: 7, name: 'Investment1', interest: "2.3%", amount:0},
+    {id: 8, name: 'Investment2', interest: "2%", amount:0},
+    {id: 9, name: 'Investment3', interest: "5%", amount:0},
+    {id: 10, name: 'Investment4', interest: "10%", amount:0},
+    {id: 11, name: 'Investment5', interest: "0%", amount:0},
+
+
+  ];
+
+
+   longTermAsset = [
+    {id:1, name: 'Primary Home', interest:"1%", amount: 0},
+    {id:2, name:'Second Home', interest:"2%", amount:0},
+    {id:3, name:'Other', interest:"", amount: 0},
+
+  ];
+
+
+   liabilities = [
+    {id:1, name:'Credit Card 1', pay:"200.00", interest:"50%", amount:0},
+    {id:2, name:'Credit Card 2', pay:"150.00", interest:"22%", amount:0},
+  ]
+
+
+   debt = [
+    {id: 1, name: 'Mortgage 1', pay:"2000.00", interest:"2.60%", amount:0},
+    {id: 2, name: 'Mortgage 2', pay:"3500.00", interest:"22%", amount: 0},
+    {id:3,  name:'Line of Credit', pay:"500.00", interest: "5%", amount:0},
+    {id:4,  name:'Investment Loan',pay: "700.00", interest:"6%", amount:0},
+    {id:5,  name:'Student Loan', pay:"3500.00", interest:"22%", amount:0},
+    {id:6,  name:'Car Loan', pay:"3500.00", interest:"22%", amount:0},
+  ]
+
+
+  changeCashInput = (id, event) => {
     //Spread Operator: "..."
-    const asset = {
-      ...this.state.assets[id]
+    const cashInvest = {
+      ...this.cashInvestments[id-1]
     };
-    asset.value = event.target.value;
+    cashInvest.amount = event.target.value;
 
-    const new_assets = [...this.state.assets];
-    new_assets[id] = asset;
+    const new_assets = [...this.cashInvestments];
+    new_assets[id-1] = cashInvest;
 
-    this.setState({assets: new_assets});
+    console.log(new_assets);
+    this.setState({cashInvestments: new_assets});
   }
 
   render() {
@@ -206,7 +209,7 @@ class CustomizedTable extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {asset.map(asset => {
+              {this.cashInvestments.map(asset => {
                 return (
                     <TableRow className="assets" key={asset.id}>
                       <CustomTableCell component="th" scope="row">
@@ -217,8 +220,8 @@ class CustomizedTable extends Component {
                       <CustomTableCell>
                         <div className="form-row">
                           <input type="number" style={this.red} min="0" step="0.01" data-number-to-fixed="2"
-                                 data-number-stepfactor="100" className="currency"
-                                 onChange={(event) => { this.changeAssetInput(asset.id, event) } }/>
+                                 data-number-stepfactor="100" className="currency" placeholder="Place input"
+                                 onChange={(event) => { this.changeCashInput(asset.id, event) } }/>
                         </div>
                       </CustomTableCell>
                     </TableRow>
@@ -234,7 +237,7 @@ class CustomizedTable extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {longTermasset.map(longTermasset => {
+              {this.longTermAsset.map(longTermasset => {
                 return (
                     <TableRow className={longTermasset.row} key={longTermasset.id}>
                       <CustomTableCell component="th" scope="row">
@@ -271,7 +274,7 @@ class CustomizedTable extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {liabilities.map(liabilities => {
+              {this.liabilities.map(liabilities => {
                 return (
                     <TableRow className={liabilities.row} key={liabilities.id}>
                       <CustomTableCell component="th" scope="row">
@@ -300,7 +303,7 @@ class CustomizedTable extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {debt.map(debt => {
+              {this.debt.map(debt => {
                 return (
                     <TableRow className={debt.row} key={debt.id}>
                       <CustomTableCell component="th" scope="row">
