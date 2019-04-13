@@ -40,31 +40,31 @@ const styles = theme => ({
   },
 });
 
-let id = 0;
-
-function clearID(){
-  id = 0;
-}
-
-
-function createData1(name, interest, amount) {
-  id += 1;
-  return { id, name, interest, amount };
-}
+// let id = 0;
+//
+// function clearID(){
+//   id = 0;
+// }
 
 
-function createData2(name, pay, interest, amount) {
-  id += 1;
-  return { id, name, pay, interest, amount };
-}
+// function createData1(name, interest, amount) {
+//   id += 1;
+//   return { id, name, interest, amount };
+// }
+//
+//
+// function createData2(name, pay, interest, amount) {
+//   id += 1;
+//   return { id, name, pay, interest, amount };
+// }
 
 
 
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
+// function myFunction() {
+//   document.getElementById("myDropdown").classList.toggle("show");
+// }
 
 
 // Close the dropdown menu if the user clicks outside of it
@@ -176,20 +176,73 @@ class CustomizedTable extends Component {
     const new_assets = [...this.cashInvestments];
     new_assets[id-1] = cashInvest;
 
-    console.log(new_assets);
+    // console.log(new_assets);
     this.setState({cashInvestments: new_assets});
   }
+
+
+
+  changeLongTerm = (id, event) => {
+        //Spread Operator: "..."
+        const longTermInvest = {
+            ...this.longTermAsset[id-1]
+        };
+        longTermInvest.amount = event.target.value;
+
+        const new_assets = [...this.longTermAsset];
+        new_assets[id-1] = longTermInvest;
+
+        // console.log(new_assets);
+        this.setState({longTermAsset: new_assets});
+    }
+
+
+    changeLiabilities = (id, event) => {
+        //Spread Operator: "..."
+        const lia = {
+            ...this.liabilities[id-1]
+        };
+        lia.amount = event.target.value;
+
+        const new_lia = [...this.liabilities];
+        new_lia[id-1] = lia;
+
+        // console.log(new_assets);
+        this.setState({liabilities: new_lia});
+    }
+
+
+    changeDebt = (id, event) => {
+        //Spread Operator: "..."
+        const debt = {
+            ...this.debt[id-1]
+        };
+        debt.amount = event.target.value;
+
+        const new_debt = [...this.debt];
+        new_debt[id-1] = debt;
+
+        // console.log(new_assets);
+        this.setState({debt: new_debt});
+    }
+
+
 
   render() {
     return (
         <Paper className="root">
           <h1> Tracking your Networth</h1>
 
+          <TableRow>
           <select value={this.state.currency} onChange={(event) => {this.setState({currency: event.target.value});
                       console.log(this.state.currency);} }>
             <option value="CAD">CAD</option>
             <option value="USD">USD</option>
           </select>
+
+          <button>Calculate</button>
+
+          </TableRow>
 
           <TableRow>
             <CustomTableCell style={this.green}>Net Worth</CustomTableCell>
@@ -237,17 +290,18 @@ class CustomizedTable extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.longTermAsset.map(longTermasset => {
+              {this.longTermAsset.map(longTermAsset => {
                 return (
-                    <TableRow className={longTermasset.row} key={longTermasset.id}>
+                    <TableRow className={longTermAsset.row} key={longTermAsset.id}>
                       <CustomTableCell component="th" scope="row">
-                        {longTermasset.name}
+                        {longTermAsset.name}
                       </CustomTableCell>
-                      <CustomTableCell align="right" style={this.red}>{longTermasset.interest}</CustomTableCell>
+                      <CustomTableCell align="right" style={this.red}>{longTermAsset.interest}</CustomTableCell>
                       <CustomTableCell>
                         <div className="form-row">
                           <input type="number" style={this.red} min="0" step="0.01" data-number-to-fixed="2"
-                                 data-number-stepfactor="100" className="currency" id="c1"/>
+                                 data-number-stepfactor="100" className="currency"
+                                 onChange={(event)=>{this.changeLongTerm(longTermAsset.id, event)}}/>
                         </div>
                       </CustomTableCell>
                     </TableRow>
@@ -285,7 +339,8 @@ class CustomizedTable extends Component {
                       <CustomTableCell>
                         <div className="form-row">
                           <input type="number" style={this.red} min="0" step="0.01" data-number-to-fixed="2"
-                                 data-number-stepfactor="100" className="currency" id="c1"/>
+                                 data-number-stepfactor="100" className="currency"
+                                 onChange = {(event) => {this.changeLiabilities(liabilities.id, event)}}/>
                         </div>
                       </CustomTableCell>
                     </TableRow>
@@ -314,7 +369,8 @@ class CustomizedTable extends Component {
                       <CustomTableCell>
                         <div className="form-row">
                           <input type="number" align={"right"} style={this.red} min="0" step="0.01" data-number-to-fixed="2"
-                                 data-number-stepfactor="100" className="currency" id="c1"/>
+                                 data-number-stepfactor="100" className="currency"
+                                 onChange = {(event => {this.changeDebt(debt.id, event)})}/>
                         </div>
                       </CustomTableCell>
                     </TableRow>
