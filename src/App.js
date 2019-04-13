@@ -112,9 +112,7 @@ class CustomizedTable extends Component {
   }
 
   handleInput = (segment, id, event) => {
-    console.log("segment: ", segment);
     const newSegment = this.state[segment];
-    console.log("newSegment: ", newSegment);
     if (newSegment[id] === event.target.value) {
       return;
     }
@@ -125,8 +123,6 @@ class CustomizedTable extends Component {
   };
 
   render() {
-    console.log("state: ", this.state);
-
     return (
       <Paper className="root">
         <h1> Tracking your Networth</h1>
@@ -134,10 +130,7 @@ class CustomizedTable extends Component {
         <TableRow>
           <select
             value={this.state.currency}
-            onChange={event => {
-              this.setState({ currency: event.target.value });
-              console.log(this.state.currency);
-            }}
+            onChange={event => this.setState({ currency: event.target.value })}
           >
             <option value="CAD">CAD</option>
             <option value="USD">USD</option>
